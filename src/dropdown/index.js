@@ -43,6 +43,7 @@ export const Dropdown = ({ options }) => {
           zIndex: 1,
           flexDirection: "row",
           alignItems: "center",
+          elevation: 1,
         }}
         onPress={() => {
           setExpand((prev) => !prev);
