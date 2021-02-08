@@ -1,11 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View, Text, TouchableOpacity } from "react-native";
+import FeatherIcon from "react-native-vector-icons/Feather";
 import {
   useAnimatedValue,
   AnimatedBlock,
   bInterpolate,
+  makeAnimatedComponent,
+  AnimatedText,
 } from "react-native-ui-animate";
+
+const AnimatedTouchableOpacity = makeAnimatedComponent(TouchableOpacity);
+const AnimatedIcon = makeAnimatedComponent(FeatherIcon);
 
 const OPTION_HEIGHT = 60;
 
@@ -14,11 +20,18 @@ export const Dropdown = ({ options }) => {
   const expandAnimation = useAnimatedValue(expand);
 
   return (
-    <>
-      <TouchableOpacity
+    <View
+      style={{
+        marginVertical: 10,
+      }}
+    >
+      <AnimatedTouchableOpacity
         style={{
           padding: 24,
-          backgroundColor: "#ffffff",
+          backgroundColor: bInterpolate(expandAnimation.value, [
+            "#ffffff",
+            "#3399ff",
+          ]),
           borderRadius: 10,
           borderWidth: 1,
           borderStyle: "solid",
@@ -28,14 +41,38 @@ export const Dropdown = ({ options }) => {
           shadowRadius: 20,
           shadowOffset: { width: 0, height: 4 },
           zIndex: 1,
+          flexDirection: "row",
+          alignItems: "center",
         }}
         onPress={() => {
           setExpand((prev) => !prev);
         }}
         activeOpacity={0.8}
       >
-        <Text>Toggle Dropdown</Text>
-      </TouchableOpacity>
+        <AnimatedText
+          style={{
+            flex: 1,
+            color: bInterpolate(expandAnimation.value, ["#353535", "#ffffff"]),
+          }}
+        >
+          Toggle Dropdown
+        </AnimatedText>
+        <AnimatedIcon
+          style={{
+            transform: [
+              {
+                rotate: bInterpolate(expandAnimation.value, [
+                  "0deg",
+                  "-180deg",
+                ]),
+              },
+            ],
+            color: bInterpolate(expandAnimation.value, ["#353535", "#ffffff"]),
+          }}
+          name="chevron-down"
+          size={24}
+        />
+      </AnimatedTouchableOpacity>
 
       <AnimatedBlock
         style={{
@@ -71,7 +108,7 @@ export const Dropdown = ({ options }) => {
           </TouchableOpacity>
         ))}
       </AnimatedBlock>
-    </>
+    </View>
   );
 };
 
