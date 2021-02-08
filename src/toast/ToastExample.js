@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
-import { Toast } from ".";
+import { Toast } from "./index";
 
 export default function ToastExample() {
   const [toastOpen, setToastOpen] = React.useState(false);
